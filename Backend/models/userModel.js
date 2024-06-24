@@ -58,7 +58,6 @@ userSchema.methods.comparePassword = async (
     candidatePassword,
     userPassword
   );
-  console.log(isPasswordMatched, typeof isPasswordMatched);
   return isPasswordMatched;
 };
 

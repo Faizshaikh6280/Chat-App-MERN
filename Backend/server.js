@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import authRouter from "./routes/authRoutes.js";
 import messageRouter from "./routes/messageRoutes.js";
+import userRouter from "./routes/userRoutes.js";
 import connectingToDB from "./DB/connnectToMongoDb.js";
 import { globalErrorHandler } from "./controllers/errorController.js";
 
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 
 app.use("/api/auth", authRouter);
 app.use("/api/message", messageRouter);
+app.use("/api/users", userRouter);
 
 app.use("*", (req, res) => {
   res.send(`Can't find the ${req.originalUrl} on this server!`);

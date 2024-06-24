@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { AppError } from "../utils/AppError.js";
 import userModel from "../models/userModel.js";
 
-export const protect = async function (req, res, next) {
+const protectRoute = async function (req, res, next) {
   // Get Token
   const token = req.cookies.jwt;
   if (!token) {
@@ -12,9 +12,11 @@ export const protect = async function (req, res, next) {
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   if (!decoded) return next(new AppError("Invalid Token", 401));
 
-  const user = await userModel.findById(decoded.id);
+  const user = await userModel.findById(decoded.id).select("-password");
   if (!user) return next(new AppError("User not found", 404));
 
   req.user = user;
   next();
 };
+
+export default protectRoute;
