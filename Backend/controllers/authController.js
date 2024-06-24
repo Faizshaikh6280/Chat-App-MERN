@@ -3,26 +3,21 @@ import catchAsync from "../utils/catchAsync.js";
 import { AppError } from "../utils/AppError.js";
 import userModel from "../models/userModel.js";
 const signToken = (id) =>
-  json.sign({ id }, process.env.JSON_SECRET, {
-    expiresIn: process.env.JSON_EXPIRE_TIME,
+  json.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE_TIME,
   });
 
 const createSignToken = function (user, res, statusCode) {
   const token = signToken(user._id);
 
-  const cookieOption = {
+  res.cookie("jwt", token, {
     expires: new Date(
-      Date.now() + process.env.JSON_EXPIRE_IN * 24 * 60 * 60 * 1000
+      Date.now() + process.env.JWT_EXPIRE_IN * 24 * 60 * 60 * 1000
     ),
     sameSite: "strict",
-    httpsOnly: true, // prevent XSS attacts cros side scripting attacks.
-  };
-
-  if (process.env.NODE_ENVIROMENT === "production") {
-    cookieOption.secure = true;
-  }
-
-  res.cookie("jwt", token, cookieOption);
+    httpOnly: true, // prevent XSS attacts cros side scripting attacks.
+    secure: process.env.NODE_ENVIROMENT === "production",
+  });
 
   res.status(statusCode).json({
     status: "success",
@@ -30,8 +25,6 @@ const createSignToken = function (user, res, statusCode) {
     user,
   });
 };
-
-const login = catchAsync(async (req, res, next) => {});
 
 const signup = catchAsync(async (req, res, next) => {
   const { fullname, username, gender, password, confirmPassword } = req.body;
@@ -61,6 +54,24 @@ const signup = catchAsync(async (req, res, next) => {
     });
   }
   createSignToken(user, res, 201);
+});
+
+const login = catchAsync(async (req, res, next) => {
+  const { username, password } = req.body;
+  // Find user
+  const user = await userModel.findOne({ username });
+
+  //check password is correct
+  const isPasswordMatched = await user.comparePassword(
+    `${password}`,
+    user.password
+  );
+
+  if (!user || !isPasswordMatched) {
+    return next(new AppError("Invalid username or password", 400));
+  } else {
+    createSignToken(user, res, 200);
+  }
 });
 
 const logout = () => {
