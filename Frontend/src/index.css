@@ -16,8 +16,10 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #121212;
-  border-radius: 5px;
+  background: #121212; /* Color of the scrollbar thumb */
+  border-radius: 6px; /* Roundness of the scrollbar thumb */
+  border: 3px solid transparent; /* Creates space around the thumb */
+  background-clip: content-box; /* Ensures the border is around the thumb */
 }
 
 ::-webkit-scrollbar-thumb:hover {

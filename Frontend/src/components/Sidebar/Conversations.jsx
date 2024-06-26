@@ -9,10 +9,6 @@ function Conversations() {
       <Conversation isOpen={false} />
       <Conversation isOpen={false} />
       <Conversation isOpen={false} />
-      <Conversation isOpen={false} />
-      <Conversation isOpen={false} />
-      <Conversation isOpen={false} />
-      <Conversation isOpen={false} />
     </div>
   );
 }
