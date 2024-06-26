@@ -1,14 +1,18 @@
-import React from "react";
 import Conversation from "./Conversation";
 
 function Conversations() {
   return (
     <div>
-      <Conversation />
-      <Conversation />
-      <Conversation />
-      <Conversation />
-      <Conversation />
+      <Conversation isOpen={false} />
+      <Conversation isOpen={true} />
+      <Conversation isOpen={false} />
+      <Conversation isOpen={false} />
+      <Conversation isOpen={false} />
+      <Conversation isOpen={false} />
+      <Conversation isOpen={false} />
+      <Conversation isOpen={false} />
+      <Conversation isOpen={false} />
+      <Conversation isOpen={false} />
     </div>
   );
 }
