@@ -6,6 +6,8 @@ export const globalErrorHandler = function (err, req, res, next) {
       message: `${Object.keys(err.keyPattern)[0]} must be unique `,
     });
   }
-
-  res.send(`Error 💥 ${err.message}`);
+  return res.status(400).json({
+    status: "fail",
+    message: err.message,
+  });
 };

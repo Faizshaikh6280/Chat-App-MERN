@@ -21,7 +21,7 @@ const createSignToken = function (user, res, statusCode) {
 
   res.status(statusCode).json({
     status: "success",
-    token,
+    token: process.env.NODE_ENV === "development" ? token : undefined,
     user,
   });
 };
@@ -59,17 +59,14 @@ const signup = catchAsync(async (req, res, next) => {
 const login = catchAsync(async (req, res, next) => {
   const { username, password } = req.body;
   // Find user
-  const user = await userModel.findOne({ username });
+  const user = await userModel.findOne({ username }).select("+password");
 
   //check password is correct
-  const isPasswordMatched = await user.comparePassword(
-    `${password}`,
-    user.password
-  );
 
-  if (!user || !isPasswordMatched) {
+  if (!user || !(await user.comparePassword(`${password}`, user.password))) {
     return next(new AppError("Invalid username or password", 400));
   } else {
+    user.password = undefined;
     createSignToken(user, res, 200);
   }
 });

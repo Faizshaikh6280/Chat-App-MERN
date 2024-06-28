@@ -2,13 +2,14 @@ import React from "react";
 import Sidebar from "../components/Sidebar/Sidebar";
 import MessageContainer from "../components/MessageContainer/MessageContainer";
 import NotChatting from "../components/NotChatting";
+import useConversation from "../zustand/useConversation.js";
 
 const Home = () => {
-  const isChating = true;
+  const { selectedConversation } = useConversation();
   return (
     <div className="flex  bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0">
       <Sidebar />
-      {isChating ? <MessageContainer /> : <NotChatting />}
+      {selectedConversation ? <MessageContainer /> : <NotChatting />}
     </div>
   );
 };

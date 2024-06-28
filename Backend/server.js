@@ -7,17 +7,21 @@ import messageRouter from "./routes/messageRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import connectingToDB from "./DB/connnectToMongoDb.js";
 import { globalErrorHandler } from "./controllers/errorController.js";
+import cors from "cors";
+import morgan from "morgan";
 
 const app = express();
 dotenv.config({ path: "./.env" });
 
 app.use(cookieParser());
 app.use(helmet());
+app.use(morgan("dev"));
 app.use(
   express.json({
     limit: "10kb",
   })
 );
+app.use(cors());
 
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 
