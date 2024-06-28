@@ -10,7 +10,6 @@ export const useGetMessages = function () {
     try {
       const res = await fetch(`/api/message/${selectedConversation._id}`);
       const data = await res.json();
-      console.log(data);
 
       if (data.status === "success") {
         setMessages(data.messages);

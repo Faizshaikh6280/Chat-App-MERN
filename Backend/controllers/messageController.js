@@ -1,6 +1,7 @@
 import conversationModel from "../models/conversationModel.js";
 import messageModel from "../models/messageModel.js";
 import userModel from "../models/userModel.js";
+import { getSocketId, io } from "../socket/socket.js";
 import catchAsync from "../utils/catchAsync.js";
 
 export const createMessage = catchAsync(async (req, res, next) => {
@@ -30,6 +31,13 @@ export const createMessage = catchAsync(async (req, res, next) => {
   if (newMessage) {
     conversation.messages.push(newMessage._id);
     await conversation.save();
+
+    // socket functionality goes here
+    const receiverSocketId = getSocketId(receiverId);
+    if (receiverSocketId) {
+      // io.to(<socket_id>).emit() used to send event to specific user
+      io.to(receiverSocketId).emit("newMessage", newMessage);
+    }
 
     res.status(201).json({
       status: "success",

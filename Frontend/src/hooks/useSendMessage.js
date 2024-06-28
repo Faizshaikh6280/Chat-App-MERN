@@ -22,11 +22,7 @@ export const useSendMessage = function () {
       });
       const data = await res.json();
       if (data.status === "success") {
-        console.log(data.newMessage);
         setMessages([...messages, data.newMessage]);
-        const temp = [...lastMessages];
-        console.log(temp);
-        temp.forEach((el) => {});
       } else {
         throw data;
       }

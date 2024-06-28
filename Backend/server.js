@@ -9,8 +9,8 @@ import connectingToDB from "./DB/connnectToMongoDb.js";
 import { globalErrorHandler } from "./controllers/errorController.js";
 import cors from "cors";
 import morgan from "morgan";
+import { app, server } from "./socket/socket.js";
 
-const app = express();
 dotenv.config({ path: "./.env" });
 
 app.use(cookieParser());
@@ -36,7 +36,7 @@ app.use("*", (req, res) => {
 app.use(globalErrorHandler);
 
 const port = process.env.PORT || 5000;
-app.listen(port, () => {
+server.listen(port, () => {
   // rootURL = https://localhost:5000
   connectingToDB();
   console.log(`Server running on port ${port}`);

@@ -3,15 +3,16 @@ import { useGetMessages } from "../../hooks/useGetMessages.js";
 import ChatLoadingSkeleton from "../Skeletons/ChatLoadingSkeleton.jsx";
 import Message from "./Message";
 import useConversation from "../../zustand/useConversation.js";
+import useListenMessage from "../../hooks/useListenMessage.js";
 
 function Messages() {
   const { loading, messages } = useGetMessages();
   const lastMesgRef = useRef();
-
+  useListenMessage();
   useEffect(() => {
     setTimeout(() => {
       lastMesgRef.current?.scrollIntoView({ behaviour: "smooth" });
-    }, 100);
+    }, 0);
   }, [messages]);
 
   return (

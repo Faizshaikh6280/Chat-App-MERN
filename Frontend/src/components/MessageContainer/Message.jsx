@@ -11,6 +11,8 @@ function Message({ message }) {
     ? authUser.profilePic
     : selectedConversation.profilePic;
 
+  const shakeClass = message.shouldShake ? "shake" : "";
+
   return (
     <div className={`chat ${chatClassname}`}>
       <div className="chat-image avatar">
@@ -26,7 +28,7 @@ function Message({ message }) {
       <div
         className={`chat-bubble ${
           fromMe ? "bg-sky-500 text-slate-100" : ""
-        } max-w-[450px]`}
+        } max-w-[450px] ${shakeClass}`}
       >
         {message.message}
       </div>

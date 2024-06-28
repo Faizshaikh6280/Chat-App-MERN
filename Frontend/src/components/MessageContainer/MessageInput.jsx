@@ -18,9 +18,9 @@ function MessageInput() {
   }
 
   return (
-    <div className="p-4">
+    <div className="px-4 mt-2">
       <form onSubmit={handleSubmit}>
-        <label className="input outline-none border-none focus:outline-none focus:border-none flex items-center gap-2 cursor-pointer">
+        <label className="input outline-none border-none focus:outline-none focus:border-none flex items-center gap-2 cursor-pointer mt-auto">
           <input
             type="text"
             className="grow"
