@@ -18,7 +18,7 @@ function Conversation({ conversation, emoji, lastIndx, lastMessage }) {
     >
       <div className={`avatar ${isOnline ? "online" : ""} w-12`}>
         <div className="w-12 rounded-full">
-          <img src={conversation.profilePic} />
+          <img src={conversation.profilePic} alt="profile image" />
         </div>
       </div>
       <div>

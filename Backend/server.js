@@ -14,6 +14,14 @@ import { app, server } from "./socket/socket.js";
 
 dotenv.config({ path: "./.env" });
 
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "img-src 'self' data: https://avatar.iran.liara.run"
+  );
+  next();
+});
+
 app.use(cookieParser());
 app.use(helmet());
 app.use(morgan("dev"));

@@ -2,6 +2,7 @@ import json from "jsonwebtoken";
 import catchAsync from "../utils/catchAsync.js";
 import { AppError } from "../utils/AppError.js";
 import userModel from "../models/userModel.js";
+
 const signToken = (id) =>
   json.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE_TIME,
