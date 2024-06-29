@@ -1,6 +1,6 @@
 import json from "jsonwebtoken";
 import catchAsync from "../utils/catchAsync.js";
-import AppError from "../utils/AppError.js";
+import AppError from "../utils/appError.js";
 import userModel from "../models/userModel.js";
 
 const signToken = (id) =>
