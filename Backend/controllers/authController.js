@@ -68,6 +68,7 @@ const login = catchAsync(async (req, res, next) => {
     return next(new AppError("Invalid username or password", 400));
   } else {
     user.password = undefined;
+    console.log(process.env.JWT_EXPIRE_TIME);
     createSignToken(user, res, 200);
   }
 });
