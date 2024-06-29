@@ -1,3 +1,4 @@
+import path from "path";
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
@@ -22,12 +23,19 @@ app.use(
   })
 );
 app.use(cors());
-
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 
 app.use("/api/auth", authRouter);
 app.use("/api/message", messageRouter);
 app.use("/api/users", userRouter);
+
+const __dirname = path.resolve();
+
+// using this we will access our frontend from the server
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+});
 
 app.use("*", (req, res) => {
   res.send(`Can't find the ${req.originalUrl} on this server!`);
